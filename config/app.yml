@@ -1,0 +1,21 @@
+# These are the configurations for the sfRADIUSAuth Plugin
+# all values here have to be overriden in your app.yml!
+app:
+  sfRADIUSAuth:
+    #wether to enable the plugin or not.
+    enabled: true
+    # the password authtype the server uses: one of
+    # MSCHAPv2
+    # MSCHAPv1
+    # PAP
+    # CHAP_MD5
+    auth_type: MSCHAPv2
+    # ip or dns-name of the server to use
+    server:  localhost
+    # ports to use for authentication (accounting is not available atm!)
+    port:
+      auth:  0
+      acc:   0
+    # shared secret to use when communicating with the radius server
+    secret: ~
+  

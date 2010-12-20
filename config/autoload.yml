@@ -1,0 +1,15 @@
+# Auto-generated template
+autoload:
+  sfRADIUSAuth:
+    name: sfRADIUSAuth
+    path: %SF_PLUGIN_DIR%/sfRADIUSAuthPlugin/lib/
+  PEAR:
+    name: PEAR
+    path: %SF_PLUGIN_DIR%/sfRADIUSAuthPlugin/lib/vendor/PEAR/
+  PEAR_Auth:
+    name: PEAR_Auth
+    path: %SF_PLUGIN_DIR%/sfRADIUSAuthPlugin/lib/vendor/PEAR/Auth/
+  PEAR_Crypt:
+    name: PEAR_Crypt
+    path: %SF_PLUGIN_DIR%/sfRADIUSAuthPlugin/lib/vendor/PEAR/Crypt/
+
