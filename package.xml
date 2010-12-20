@@ -10,7 +10,7 @@
   <email>d.reiche@gmx.ch</email>
   <active>yes</active>
  </lead>
- <date>2010-12-17</date>
+ <date>2010-12-20</date>
  <time>10:00:00</time>
  <version>
   <release>0.1.0</release>
@@ -28,7 +28,7 @@
    <file role="data" name="LICENSE" />
    <dir name="config">
     <!-- config -->
-    <file role="data" name="settings.yml" />
+    <file role="data" name="app.yml" />
 	<file role="data" name="autoload.yml" />
     <file role="data" name="sfRADIUSAuthPluginConfiguration.class.php" />
    </dir>
@@ -44,7 +44,7 @@
 		<file role="data" name="PEAR.php" />
    	  </dir>
 	</dir>
-   	<file role="data" name="sfRADIUSAuthPlugin.class.php" />
+   	<file role="data" name="sfRADIUSAuth.class.php" />
    </dir>
   </dir>
  </contents>
