@@ -21,8 +21,8 @@
  * @subpackage Auth
  * @author     BigBadBassMan <d.reiche@gmx.ch>
  * @license    http://www.symfony-project.org/license MIT
- * @release    0.1.0
- * @link       www.symfony-project.org
+ * @release    0.1.1
+ * @link       www.symfony-project.org/plugins/sfRADIUSAuthPlugin
  * @see        sfPluginConfiguration
  */
 class sfRADIUSAuthPluginConfiguration extends sfPluginConfiguration
@@ -40,7 +40,7 @@ class sfRADIUSAuthPluginConfiguration extends sfPluginConfiguration
 			return;
 		}
 
-		if (in_array('sfGuardAuth', sfConfig::get('settings_enabled_modules', array()))) {
+		if (in_array('sfGuardAuth', sfConfig::get('sf_enabled_modules', array()))) {
 			sfConfig::set(
 				'app_sf_guard_plugin_check_password_callable',
 				array('sfRADIUSAuth', 'authenticateUser')

@@ -13,7 +13,7 @@
  <date>2010-12-20</date>
  <time>10:00:00</time>
  <version>
-  <release>0.1.0</release>
+  <release>0.1.1</release>
   <api>0.1.0</api>
  </version>
  <stability>
@@ -76,7 +76,7 @@
  <changelog>
    <release>
     <version>
-      <release>0.1.0</release>
+      <release>0.1.1</release>
       <api>0.1.0</api>
     </version>
     <stability>
@@ -84,9 +84,9 @@
       <api>beta</api>
     </stability>
     <license uri="http://www.symfony-project.com/license">MIT license</license>
-    <date>2010-12-20</date>
+    <date>2011-01-11</date>
     <notes>
-      * BBBM: initial working version, only MSCHAPv2 supported
+      * fixed plugin config: set plugin as callable for sfGuardAuth through config class.
     </notes>
    </release> </changelog>
 </package>

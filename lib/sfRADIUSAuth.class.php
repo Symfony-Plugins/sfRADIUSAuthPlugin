@@ -10,6 +10,7 @@
  * @author     BigBadBassMan <d.reiche@gmx.ch>
  * @license    http://www.symfony-project.org/license MIT
  * @link       www.symfony-project.org
+ * @version    SVN: $Id $
  */
 
 /**
@@ -20,7 +21,7 @@
  * @subpackage Auth
  * @author     BigBadBassMan <d.reiche@gmx.ch>
  * @license    http://www.symfony-project.org/license MIT
- * @link       www.symfony-project.org
+ * @link       www.symfony-project.org/plugins/sfRADIUSAuthPlugin
  */
 class sfRADIUSAuth
 {
@@ -78,11 +79,13 @@ class sfRADIUSAuth
 
 			break;
 		case 'MSCHAPv1':
+			throw new sfConfigurationException("Only MSCHAPv2 is supported atm.", 1);
 			break;
 		case 'PAP':
+			throw new sfConfigurationException("Only MSCHAPv2 is supported atm.", 1);
 			break;
-
 		case 'CHAP_MD5':
+			throw new sfConfigurationException("Only MSCHAPv2 is supported atm.", 1);
 			break;
 		}
 

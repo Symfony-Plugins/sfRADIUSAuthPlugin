@@ -29,7 +29,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 This code cannot simply be copied and put under the GNU Public License or 
 any other GPL-like (LGPL, GPL2) License.
 
-    $Id: CHAP.php 302857 2010-08-28 21:12:59Z mbretter $
+    $Id$
 */
 
 require_once 'PEAR.php';
@@ -43,7 +43,7 @@ require_once 'PEAR.php';
 * @package Crypt_CHAP
 * @author  Michael Bretterklieber <michael@bretterklieber.com>
 * @access  public
-* @version $Revision: 302857 $
+* @version $Revision$
 */
 
 /**

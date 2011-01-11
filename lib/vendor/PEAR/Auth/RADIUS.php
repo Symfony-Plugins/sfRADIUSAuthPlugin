@@ -30,7 +30,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 This code cannot simply be copied and put under the GNU Public License or
 any other GPL-like (LGPL, GPL2) License.
 
-    $Id: RADIUS.php 257341 2008-04-13 10:31:44Z mbretter $
+    $Id$
 */
 
 require_once 'PEAR.php';
@@ -43,7 +43,7 @@ require_once 'PEAR.php';
 * @package Auth_RADIUS
 * @author  Michael Bretterklieber <michael@bretterklieber.com>
 * @access  public
-* @version $Revision: 257341 $
+* @version $Revision$
 */
 
 $pear = new PEAR();
