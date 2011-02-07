@@ -10,12 +10,19 @@ app:
     # PAP
     # CHAP_MD5
     auth_type: MSCHAPv2
-    # ip or dns-name of the server to use
-    server:  localhost
-    # ports to use for authentication (accounting is not available atm!)
-    port:
-      auth:  0
-      acc:   0
-    # shared secret to use when communicating with the radius server
-    secret: ~
+    #if true, all servers will be added to a qeue and RADIUS calls will be made to each of the servers until a valid auth is found.
+    #if false, a random server will be used for each request. 
+    server_qeue: true
+    # define one or more radius servers with ip/hostnames, ports and shared secrets.
+    # the names (for example Primary) do not matter.
+    servers:
+      Primary:
+        # ip or dns-name of the server to use
+        ip:  localhost
+        # ports to use for authentication (accounting is not available atm!)
+        port:
+          auth:  1812
+          acc:   1813
+        # shared secret to use when communicating with the radius server
+        secret: s3cr3t
   

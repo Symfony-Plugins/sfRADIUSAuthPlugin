@@ -9,8 +9,8 @@
  * @subpackage Auth
  * @author     BigBadBassMan <d.reiche@gmx.ch>
  * @license    http://www.symfony-project.org/license MIT
- * @link       www.symfony-project.org
  * @version    SVN: $Id $
+ * @link       www.symfony-project.org
  */
 
 /**
@@ -25,8 +25,6 @@
  */
 class sfRADIUSAuth
 {
-	private $_radius;
-	private $_chap;
 	private static $_instance;
 
 
@@ -41,6 +39,93 @@ class sfRADIUSAuth
 
 	}
 
+	/**
+	 * Factory method to create a CRYPT object, based on type string.
+	 *
+	 * @param string $type crypt type to create.
+	 *
+	 * @return Crypt_CHAP
+	 */
+	private static function _cryptFactory($type = 'MSCHAPv2')
+	{
+		$crypt = null;
+
+		switch ($type) {
+		case 'MSCHAPv1':
+			$crypt = new Crypt_CHAP_MSv1();
+			break;
+		case 'MSCHAPv2':
+			$crypt = new Crypt_CHAP_MSv2();
+			break;
+		case 'CHAP_MD5':
+			$crypt = new Crypt_CHAP_MD5();
+			break;
+		}
+
+		return $crypt;
+	}
+
+	/**
+	 * Factory method to create a radius object.
+	 *
+	 * @param string $type encryption type of radius to use.
+	 *
+	 * @throws InvalidArgumentException
+	 *
+	 * @return Auth_RADIUS
+	 */
+	private static function _radiusFactory($type)
+	{
+		$radius = null;
+
+		switch ($type) {
+		case 'MSCHAPv1':
+			$radius = new Auth_RADIUS_MSCHAPv1();
+			break;
+		case 'MSCHAPv2':
+			$radius = new Auth_RADIUS_MSCHAPv2();
+			break;
+		case 'CHAP_MD5':
+			$radius = new Auth_RADIUS_CHAP_MD5();
+			break;
+		case 'PAP':
+			$radius = new Auth_RADIUS_PAP();
+			break;
+		default:
+			throw new InvalidArgumentException('only MSCHAPv1, MSCHAPv2, CHAP_MD5 and PAP are supported.', 1);
+		}
+
+		return $radius;
+	}
+
+	/**
+	 * populate the server qeue of a RADIUS object with configured entries.
+	 *
+	 * @param Auth_RADIUS &$radius radius object to populate with server
+	 *
+	 * @return void
+	 */
+	private static function _setTargetServers(Auth_RADIUS &$radius)
+	{
+		$serverQeue = sfConfig::get('app_sfRADIUSAuth_server_qeue');
+		$servers = sfConfig::get('app_sfRADIUSAuth_servers');
+
+		sfContext::getInstance()->getLogger()->debug(print_r($servers, true));
+
+		if ($serverQeue || count($servers)==1) {
+			foreach ($servers as $server) {
+				$radius->addServer($server['ip'], $server['ports']['auth'], $server['secret']);
+			}
+		} else {
+			$key = array_rand($servers);
+
+			$radius->addServer(
+				$servers[$key]['ip'],
+				$servers[$key]['ports']['auth'],
+				$servers[$key]['secret']
+			);
+		}
+	}
 
 	/**
 	 * authenticate a username against a RADIUS server
@@ -52,41 +137,44 @@ class sfRADIUSAuth
 	 */
 	public static function authenticateUser($username, $password)
 	{
-		$instance = self::getInstance();
-
 		$type = sfConfig::get('app_sfRADIUSAuth_auth_type');
-		$server = sfConfig::get('app_sfRADIUSAuth_server');
-		$ports = sfConfig::get('app_sfRADIUSAuth_port');
-		$secret = sfConfig::get('app_sfRADIUSAuth_secret');
 
 		$class = 'Auth_RADIUS_'.$type;
 
-		$radius = new $class($username, $password);
+		$radius = self::_radiusFactory($type);
+		$radius->username = $username;
+		$radius->password = $password;
+
+		self::_setTargetServers($radius);
+
+		$crypt = self::_cryptFactory($type);
 
 		switch ($type) {
 		case 'MSCHAPv2':
-			$radius->addServer($server, $ports['auth'], $secret);
 			$radius->username = $username;
 
-			$crpt = new Crypt_CHAP_MSv2();
-			$crpt->password = $password;
-			$crpt->username = $username;
+			$crypt->password = $password;
+			$crypt->username = $username;
 
-			$radius->challenge = $crpt->authChallenge;
-			$radius->peerChallenge = $crpt->peerChallenge;
-			$radius->chapid = $crpt->chapid;
-			$radius->response = $crpt->challengeResponse();
+			$radius->challenge = $crypt->authChallenge;
+			$radius->peerChallenge = $crypt->peerChallenge;
+			$radius->chapid = $crypt->chapid;
+			$radius->response = $crypt->challengeResponse();
 
-			break;
-		case 'MSCHAPv1':
-			throw new sfConfigurationException("Only MSCHAPv2 is supported atm.", 1);
-			break;
-		case 'PAP':
-			throw new sfConfigurationException("Only MSCHAPv2 is supported atm.", 1);
 			break;
 		case 'CHAP_MD5':
-			throw new sfConfigurationException("Only MSCHAPv2 is supported atm.", 1);
+		case 'MSCHAPv1':
+			$crypt->password = $password;
+			$radius->challenge = $crypt->challenge;
+			$radius->chapid = $crypt->chapid;
+			$radius->response = $crypt->challengeResponse();
+			$radius->flags = 1;
 			break;
+		case 'PAP':
+			$radius->password = $password;
+			break;
+		default:
+			throw new sfConfigurationException('wrong RADIUS type supplied.', 1);
 		}
 
 		if (!$radius->start()) {
@@ -105,22 +193,5 @@ class sfRADIUSAuth
 
 		$radius->close();
 		return $retval;
-	}
-
-	/**
-	 * Singleton.
-	 *
-	 * @static
-	 *
-	 * @return void
-	 */
-	public static function getInstance()
-	{
-		if (self::$_instance !== null) {
-			return self::$_instance;
-		}
-
-		self::$_instance = new sfRADIUSAuth();
-		return self::$_instance;
 	}
 }

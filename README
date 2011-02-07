@@ -1,7 +1,7 @@
 # sfRADIUSAuthPlugin #
 
-The sfRADIUSAuthPlugin allows to use a RADIUS server to authenticate sfGuard users in symfony projects.
-This package uses bundeled versions of the PEAR Auth_RADIUS and Crypt_CHAP libraries.
+The sfRADIUSAuthPlugin allows you to use a RADIUS server to authenticate sfGuard users in symfony projects.
+This package uses bundeled versions of the PEAR Auth_RADIUS and Crypt_CHAP libraries. PEAR is required nevertheless!
 
 ## Prerequisites ##
 
@@ -11,13 +11,16 @@ This package uses bundeled versions of the PEAR Auth_RADIUS and Crypt_CHAP libra
    The second step is not mandatory, as a version of these libs is bundled with the plugin.
    However the plugin should use the PEAR versions in the future, if PEAR is available
 
-## Installation ## 
+## Installation ##
 
-* install the plugin (use the --stability=beta option, since the plugin is not yet mature)
+* install either sfGuardPlugin or sfDoctrineGuardPlugin. One of them is required, but both are supported, therefor we can not
+  define them as required in the package.xml or symfony would try to install both.
+
+* install the plugin (use the --stability=beta option, since the plugin is not yet mature, but works for me in production):
 
 	    symfony plugin:install sfRADIUSAuthPlugin --stability=beta
-  
-* copy the plugins app.yml and fill in your values
+
+* copy the plugins app.yml and fill in your values (or use per-app or per-environment settings...)
 
         all:
           sfRADIUSAuth:
@@ -29,19 +32,29 @@ This package uses bundeled versions of the PEAR Auth_RADIUS and Crypt_CHAP libra
 	        # PAP (not implemented currently)
 	        # CHAP_MD5 (not implemented currently)
 	        auth_type: MSCHAPv2
-	        # ip or dns-name of the server to use
-	        server:  radius.yourdomain.com
-	        # ports to use for authentication (accounting is not available atm!)
-	        port:
-	          auth:  1234
-	          acc:   1235
-	        # shared secret to use when communicating with the radius server
-	        secret: SomeSharedSecretYourRadiusAdminGaveYou
+	        #use a server qeue or pick a random server on each request
+	        server_qeue: true
+	        servers:
+	          #name of the server, does not matter, just for readability
+	          Primary:
+	            # ip or dns-name of the server to use
+	            ip:  radius.yourdomain.com
+	            # ports to use for authentication (accounting is not available atm!)
+	            port:
+	              auth:  1234
+	              acc:   1235
+	            # shared secret to use when communicating with the radius server
+	            secret: SomeSharedSecretYourRadiusAdminGaveYou
+	          #Secondary server:
+	          #ip: bla
+	          #...
 
 ## Usage ##
 
-* if you done all the steps above, your ready to go.
+* if you done all the steps above, you're ready to go.
 * configure your users through sfGuard. Password-checking will be done automatically via RADIUS.
 * make sure, your users use valid RADIUS logins in your app, otherwise the RADIUS auth will fail.
-  Either tell them to use whatever corporate logins you use, or pre-create them by hand.    
-     
+  Either tell them to use whatever corporate logins you use, or pre-create them by hand.
+* You can use different RADIUS settings per App (different servers for ex.), or enable the plugin only in your backend app.
+  Or you could place the app.yml in your root/config dir and use one setting for all your servers.
+* Multiple servers should work, but could not be testet: if you encounter problems, please report them.

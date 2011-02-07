@@ -10,11 +10,11 @@
   <email>d.reiche@gmx.ch</email>
   <active>yes</active>
  </lead>
- <date>2011-01-11</date>
- <time>10:00:00</time>
+ <date>2011-02-07</date>
+ <time>15:00:00</time>
  <version>
-  <release>0.1.1</release>
-  <api>0.1.0</api>
+  <release>0.2.0</release>
+  <api>0.2.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -63,17 +63,42 @@
     <max>1.5.0</max>
     <exclude>1.5.0</exclude>
    </package>
-   <package>
-   	<name>sfDoctrineGuardPlugin</name>
-	<channel>plugins.symfony-project.org</channel>
-	<min>4.0.0</min>
-	<max>6.0.0</max>
-	<exclude>6.0.0</exclude>
-   </package>
   </required>
+  <optional>
+   <package>
+    <name>sfGuardPlugin</name>
+    <channel>plugins.symfony-project.org</channel>
+    <min>4.0.0</min>
+    <max>6.0.0</max>
+    <exclude>6.0.0</exclude>
+   </package>
+   <package>
+    <name>sfDoctrineGuardPlugin</name>
+    <channel>plugins.symfony-project.org</channel>
+    <min>5.0.0</min>
+    <max>6.0.0</max>
+    <exclude>6.0.0</exclude>
+   </package>
+  </optional>
  </dependencies>
  <phprelease />
  <changelog>
+   <release>
+    <version>
+        <release>0.2.0</release>
+        <api>0.2.0</api>
+     </version>
+     <stability>
+        <release>beta</release>
+        <api>beta</api>
+     </stability>
+    <license uri="http://www.symfony-project.com/license">MIT license</license>
+    <date>2011-02-07</date>
+    <notes>
+      * added support for querying multiple RADIUS servers
+      * added Support for MS-CHAPv1, CHAP_MD5 and PAP ciphers
+    </notes>
+   </release>
    <release>
     <version>
       <release>0.1.1</release>
