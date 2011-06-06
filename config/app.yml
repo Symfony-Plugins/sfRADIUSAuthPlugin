@@ -20,7 +20,7 @@ app:
         # ip or dns-name of the server to use
         ip:  localhost
         # ports to use for authentication (accounting is not available atm!)
-        port:
+        ports:
           auth:  1812
           acc:   1813
         # shared secret to use when communicating with the radius server
