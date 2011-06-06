@@ -40,7 +40,7 @@ This package uses bundeled versions of the PEAR Auth_RADIUS and Crypt_CHAP libra
 	            # ip or dns-name of the server to use
 	            ip:  radius.yourdomain.com
 	            # ports to use for authentication (accounting is not available atm!)
-	            port:
+	            ports:
 	              auth:  1234
 	              acc:   1235
 	            # shared secret to use when communicating with the radius server
@@ -51,10 +51,10 @@ This package uses bundeled versions of the PEAR Auth_RADIUS and Crypt_CHAP libra
 
 ## Usage ##
 
-* if you done all the steps above, you're ready to go.
+* if you've done all the steps above, you're ready to go.
 * configure your users through sfGuard. Password-checking will be done automatically via RADIUS.
 * make sure, your users use valid RADIUS logins in your app, otherwise the RADIUS auth will fail.
   Either tell them to use whatever corporate logins you use, or pre-create them by hand.
 * You can use different RADIUS settings per App (different servers for ex.), or enable the plugin only in your backend app.
-  Or you could place the app.yml in your root/config dir and use one setting for all your servers.
+  Or you could place the app.yml in your root/config dir and use one setting for all your apps.
 * Multiple servers should work, but could not be testet: if you encounter problems, please report them.
