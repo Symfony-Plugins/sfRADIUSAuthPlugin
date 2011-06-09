@@ -1,0 +1,12 @@
+#Thu Jun 09 09:05:12 CEST 2011
+active_standards=Symfony
+custom_standard_names=
+custom_standard_paths=
+debug_print_output=true
+default_tab_width=4
+eclipse.preferences.version=1
+file_extension=php, inc, tpl,
+ignore_pattern=doc
+pear_library=Local_PEAR
+php_executable=PHP5 CGI
+pref_ignore_sniffs=
