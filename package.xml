@@ -1,150 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package packagerversion="1.4.6" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
- <name>sfRADIUSAuthPlugin</name>
- <channel>plugins.symfony-project.org</channel>
- <summary>provides means to authenticate against a RADIUS server</summary>
- <description>This plugin allows to use sfGuard protected sites with a RADIUS servers, offloading password checking to RADIUS.</description>
- <lead>
-  <name>Daniel Reiche</name>
-  <user>bigbadbassman</user>
-  <email>d.reiche@gmx.ch</email>
-  <active>yes</active>
- </lead>
- <date>2011-06-09</date>
- <time>09:00:00</time>
- <version>
-  <release>0.2.2</release>
-  <api>0.2.1</api>
- </version>
- <stability>
-  <release>beta</release>
-  <api>beta</api>
- </stability>
- <license uri="http://www.symfony-project.org/license">MIT license</license>
- <notes>-</notes>
- <contents>
-  <dir name="/">
-   <file role="data" name="README" />
-   <file role="data" name="LICENSE" />
-   <dir name="config">
-    <!-- config -->
-    <file role="data" name="app.yml" />
-	<file role="data" name="autoload.yml" />
-    <file role="data" name="sfRADIUSAuthPluginConfiguration.class.php" />
-   </dir>
-   <dir name="lib">
-   	<dir name="vendor">
-   	  <dir name="PEAR">
-   	  	<dir name="Auth">
-   	  		<file role="data" name="RADIUS.php" />
-   	  	</dir>
-		<dir name="Crypt">
-			<file role="data" name="CHAP.php" />
+	<name>sfRADIUSAuthPlugin</name>
+	<channel>plugins.symfony-project.org</channel>
+	<summary>provides means to authenticate against a RADIUS server</summary>
+	<description>This plugin allows to use sfGuard protected sites with a RADIUS servers, offloading password checking to RADIUS.</description>
+	<lead>
+		<name>Daniel Reiche</name>
+		<user>bigbadbassman</user>
+		<email>d.reiche@gmx.ch</email>
+		<active>yes</active>
+	</lead>
+	<date>2011-06-14</date>
+	<time>09:00:00</time>
+	<version>
+		<release>0.2.3</release>
+		<api>0.2.1</api>
+	</version>
+	<stability>
+		<release>beta</release>
+		<api>beta</api>
+	</stability>
+	<license uri="http://www.symfony-project.org/license">MIT license</license>
+	<notes>-</notes>
+	<contents>
+		<dir name="/">
+			<file role="data" name="README" />
+			<file role="data" name="LICENSE" />
+			<dir name="config">
+				<!-- config -->
+				<file role="data" name="app.yml" />
+				<file role="data" name="autoload.yml" />
+				<file role="data" name="sfRADIUSAuthPluginConfiguration.class.php" />
+			</dir>
+			<dir name="lib">
+				<dir name="vendor">
+					<dir name="PEAR">
+						<dir name="Auth">
+							<file role="data" name="RADIUS.php" />
+						</dir>
+						<dir name="Crypt">
+							<file role="data" name="CHAP.php" />
+						</dir>
+						<file role="data" name="PEAR.php" />
+					</dir>
+				</dir>
+				<file role="data" name="sfRADIUSAuth.class.php" />
+			</dir>
 		</dir>
-		<file role="data" name="PEAR.php" />
-   	  </dir>
-	</dir>
-   	<file role="data" name="sfRADIUSAuth.class.php" />
-   </dir>
-  </dir>
- </contents>
- <dependencies>
-  <required>
-   <php>
-    <min>5.2.4</min>
-   </php>
-   <pearinstaller>
-    <min>1.4.1</min>
-   </pearinstaller>
-   <package>
-    <name>symfony</name>
-    <channel>pear.symfony-project.com</channel>
-    <min>1.4.0</min>
-    <max>1.5.0</max>
-    <exclude>1.5.0</exclude>
-   </package>
-  </required>
-  <optional>
-   <package>
-    <name>sfGuardPlugin</name>
-    <channel>plugins.symfony-project.org</channel>
-    <min>4.0.0</min>
-    <max>6.0.0</max>
-    <exclude>6.0.0</exclude>
-   </package>
-   <package>
-    <name>sfDoctrineGuardPlugin</name>
-    <channel>plugins.symfony-project.org</channel>
-    <min>5.0.0</min>
-    <max>6.0.0</max>
-    <exclude>6.0.0</exclude>
-   </package>
-  </optional>
- </dependencies>
- <phprelease />
- <changelog>
-	<release>
-		<version>
-			<release>0.2.2</release>
-			<api>0.2.1</api>
-		</version>
-		<stability>
-			<release>beta</release>
-			<api>beta</api>
-		</stability>
-	    <license uri="http://www.symfony-project.com/license">MIT license</license>
-	    <date>2011-06-06</date>
-	    <notes>
-	      * do not throw exception when radius server is not available, instead try using local sfGuard
-	      * throw sfConfigurationException on unexpected/incomplete config
-	      * use Logger to log errors from RADIUS and info
-	      * use Symfony CodeStyle
-	    </notes>
-	</release>
-	<release>
-		<version>
-			<release>0.2.1</release>
-			<api>0.2.0</api>
-		</version>
-		<stability>
-			<release>beta</release>
-			<api>beta</api>
-		</stability>
-	    <license uri="http://www.symfony-project.com/license">MIT license</license>
-	    <date>2011-06-06</date>
-	    <notes>
-	      * fixed documentation typo: the port: setting was meant to be ports:
-	    </notes>
-	</release>
-   <release>
-    <version>
-        <release>0.2.0</release>
-        <api>0.2.0</api>
-     </version>
-     <stability>
-        <release>beta</release>
-        <api>beta</api>
-     </stability>
-    <license uri="http://www.symfony-project.com/license">MIT license</license>
-    <date>2011-02-07</date>
-    <notes>
-      * added support for querying multiple RADIUS servers
-      * added Support for MS-CHAPv1, CHAP_MD5 and PAP ciphers
-    </notes>
-   </release>
-   <release>
-    <version>
-      <release>0.1.1</release>
-      <api>0.1.0</api>
-    </version>
-    <stability>
-      <release>beta</release>
-      <api>beta</api>
-    </stability>
-    <license uri="http://www.symfony-project.com/license">MIT license</license>
-    <date>2011-01-11</date>
-    <notes>
-      * fixed plugin config: set plugin as callable for sfGuardAuth through config class.
-    </notes>
-   </release> </changelog>
+	</contents>
+	<dependencies>
+		<required>
+			<php>
+				<min>5.2.4</min>
+			</php>
+			<pearinstaller>
+				<min>1.4.1</min>
+			</pearinstaller>
+			<package>
+				<name>symfony</name>
+				<channel>pear.symfony-project.com</channel>
+				<min>1.4.0</min>
+				<max>1.5.0</max>
+				<exclude>1.5.0</exclude>
+			</package>
+		</required>
+		<optional>
+			<package>
+				<name>sfGuardPlugin</name>
+				<channel>plugins.symfony-project.org</channel>
+				<min>4.0.0</min>
+				<max>6.0.0</max>
+				<exclude>6.0.0</exclude>
+			</package>
+			<package>
+				<name>sfDoctrineGuardPlugin</name>
+				<channel>plugins.symfony-project.org</channel>
+				<min>5.0.0</min>
+				<max>6.0.0</max>
+				<exclude>6.0.0</exclude>
+			</package>
+		</optional>
+	</dependencies>
+	<phprelease />
+	<changelog>
+		<release>
+			<version>
+				<release>0.2.3</release>
+				<api>0.2.1</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<license uri="http://www.symfony-project.com/license">MIT license</license>
+			<date>2011-06-06</date>
+			<notes>* fixed usage of wrong config key
+				* Log messages now match symfony standard
+				* Log messages are visible in web-debug toolbar</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.2.2</release>
+				<api>0.2.1</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<license uri="http://www.symfony-project.com/license">MIT license</license>
+			<date>2011-06-06</date>
+			<notes>* do not throw exception when radius server is not available, instead try using local sfGuard
+				* throw sfConfigurationException on unexpected/incomplete config
+				* use Logger to log errors from RADIUS and info
+				* use Symfony CodeStyle</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.2.1</release>
+				<api>0.2.0</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<license uri="http://www.symfony-project.com/license">MIT license</license>
+			<date>2011-06-06</date>
+			<notes>* fixed documentation typo: the port: setting was meant to be ports:</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.2.0</release>
+				<api>0.2.0</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<license uri="http://www.symfony-project.com/license">MIT license</license>
+			<date>2011-02-07</date>
+			<notes>* added support for querying multiple RADIUS servers
+				* added Support for MS-CHAPv1, CHAP_MD5 and PAP ciphers</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.1.1</release>
+				<api>0.1.0</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<license uri="http://www.symfony-project.com/license">MIT license</license>
+			<date>2011-01-11</date>
+			<notes>* fixed plugin config: set plugin as callable for sfGuardAuth through config class.</notes>
+		</release>
+	</changelog>
 </package>
