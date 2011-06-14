@@ -96,7 +96,7 @@ class sfRADIUSAuth
       default:
         throw new sfConfigurationException('only MSCHAPv1, MSCHAPv2, CHAP_MD5 and PAP are supported.', 1);
     }
-    sfContext::getInstance()->getLogger()->info('authenticating to RADIUS via '.$type);
+    sfContext::getInstance()->getLogger()->info('{sfRADIUSAuth} Authenticating to RADIUS via '.$type);
     return $radius;
   }
 
@@ -112,8 +112,6 @@ class sfRADIUSAuth
   	//get config options
     $serverQeue = sfConfig::get('app_sfRADIUSAuth_server_qeue', false);
     $servers = sfConfig::get('app_sfRADIUSAuth_servers', null);
-
-    sfContext::getInstance()->getLogger()->debug(print_r($servers, true));
 
     //if no servers are configured raise exception
     if (!is_array($servers) || count($servers) == 0)
@@ -131,11 +129,11 @@ class sfRADIUSAuth
       	if (isset($server['ip']) && isset($server['ports']['auth']) && isset($server['secret']))
       	{
       		$radius->addServer($server['ip'], $server['ports']['auth'], $server['secret']);
-      		sfContext::getInstance()->getLogger()->info('using RADIUS server '.$server['ip'].' in qeued mode');
+      		sfContext::getInstance()->getLogger()->info('{sfRADIUSAuth} using RADIUS server '.$server['ip'].', Port '.$server['ports']['auth'].' in qeued mode');
       	}
       	else
       	{
-      	  sfContext::getInstance()->getLogger()->warning('RADIUS Server not configured properly in: '.print_r($server, true));
+      	  sfContext::getInstance()->getLogger()->warning('{sfRADIUSAuth} RADIUS Server not configured properly in: '.print_r($server, true));
       	}
       }
     }
@@ -150,7 +148,7 @@ class sfRADIUSAuth
         $servers[$key]['secret']
       );
 
-      sfContext::getInstance()->getLogger()->info('using random RADIUS server: '.$servers[$key]['ip']);
+      sfContext::getInstance()->getLogger()->info('{sfRADIUSAuth} using random RADIUS server: '.$servers[$key]['ip'].' Port '.$servers[$key]['ports']['auth']);
     }
   }
 
@@ -169,10 +167,12 @@ class sfRADIUSAuth
 
     //create radius class name and pear object.
     $class = 'Auth_RADIUS_'.$type;
-    $pear = new PEAR();
 
     //create radius object and populate username and password
     $radius = self::_radiusFactory($type);
+
+    sfContext::getInstance()->getLogger()->info('{sfRADIUSAuth} trying to authenticate user "'.$username.'"');
+
     $radius->username = $username;
     $radius->password = $password;
 
@@ -216,25 +216,27 @@ class sfRADIUSAuth
     //start radius connection, only fails on wrong config or network downtime
     if (!$radius->start())
     {
-      sfContext::getInstance()->getLogger()->crit('RADIUS auth not possible, check config and network!');
-      sfContext::getInstance()->getLogger()->debug($radius->getError());
+      sfContext::getInstance()->getLogger()->crit('{sfRADIUSAuth} auth not possible, check config and network!');
+      sfContext::getInstance()->getLogger()->debug('{sfRADIUSAuth} '.$radius->getError());
       return $guardUser->checkPasswordByGuard($password);
     }
 
     //send username/password and check result
     $result = $radius->send();
-    if ($pear->isError($result))
+    if (PEAR::isError($result))
     {
-      sfContext::getInstance()->getLogger()->debug($radius->getError());
-      sfContext::getInstance()->getLogger()->err('RADIUS auth failed, unexpected response from server.');
+      sfContext::getInstance()->getLogger()->err('{sfRADIUSAuth} Auth failed, unexpected response from server.');
+      sfContext::getInstance()->getLogger()->debug('{sfRADIUSAuth} '.$radius->getError());
       $retval = false;
     }
     else if ($result === true)
     {
+      sfContext::getInstance()->getLogger()->info('{sfRADIUSAuth} Authentication successfull.');
       $retval = true;
     }
     else
     {
+      sfContext::getInstance()->getLogger()->warning('{sfRADIUSAuth} Authentication failed!');
       $retval = false;
     }
 
