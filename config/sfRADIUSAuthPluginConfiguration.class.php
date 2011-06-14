@@ -36,7 +36,7 @@ class sfRADIUSAuthPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
-    if (!sfConfig::get('settings_sfRADIUSAuth_enabled', false))
+    if (!sfConfig::get('app_sfRADIUSAuth_enabled', false))
     {
       return;
     }
